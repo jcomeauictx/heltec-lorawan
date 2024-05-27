@@ -1,0 +1,14 @@
+esptool --chip esp32 chip_id
+esptool.py v2.8
+Found 1 serial ports
+Serial port /dev/ttyUSB0
+Connecting....
+Chip is ESP32D0WDQ6 (revision 0)
+Features: WiFi, BT, Dual Core, Coding Scheme None
+WARNING: Detected crystal freq 0.00MHz is quite different to normalized freq 26MHz. Unsupported crystal in use?
+Crystal is 26MHz
+MAC: 00:00:00:00:00:00
+Enabling default SPI flash mode...
+Warning: ESP32 has no Chip ID. Reading MAC instead.
+MAC: 00:00:00:00:00:00
+Hard resetting via RTS pin...
