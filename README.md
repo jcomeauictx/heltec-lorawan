@@ -10,4 +10,4 @@ sent me some links, so I'll try to document my progress here.
 * <https://docs.heltec.org/en/node/esp32/wifi_lora_32/index.html>
 * <https://docs.heltec.org/en/node/esp32/quick_start.html>
 * [command-line meshtastic install](https://blog.habets.se/2024/01/Meshtastic-quick-setup.html)
-* [`esptool chip_id` error](https://github.com/espressif/esptool/issues/784)
+* [`esptool chip_id` error](https://github.com/espressif/esptool/issues/784) and [here](https://bugzilla.redhat.com/show_bug.cgi?id=1955097)
