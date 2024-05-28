@@ -6,7 +6,16 @@ frequencies, and the 900MHz band formerly used for wireless telephones back
 in the 80s (?). But no instructions came with these, and the seller just
 sent me some links, so I'll try to document my progress here.
 
-# References
+## Quick start
+
+This will launch a browser to download the latest firmware, then automatically
+install it. If it fails, see the references below.
+
+```bash
+make
+```
+
+## References
 * <https://docs.heltec.org/en/node/esp32/wifi_lora_32/index.html>
 * <https://docs.heltec.org/en/node/esp32/quick_start.html>
 * [command-line meshtastic install](https://blog.habets.se/2024/01/Meshtastic-quick-setup.html)
