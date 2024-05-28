@@ -2,9 +2,16 @@ DOWNLOADS ?= $(HOME)/Downloads
 ZIPFILE ?= $(wildcard $(DOWNLOADS)/firmware-*.zip)
 FIRMWARE_DIR := $(ZIPFILE:.zip=)
 BROWSER ?= xdg-open
+MESHTASTIC := https://meshtastic.org/downloads
 ifeq ($(SHOWENV),)
  export
 endif
+zipfile_downloaded: $(ZIPFILE)
+	if [ -z "$<" ]; then \
+	 @echo 'Launching browser to download latest "stable" firmware' >&2; \
+	 $(BROWSER) $(MESHTASTIC); \
+	fi
+	touch $@
 id:
 	python3 -m esptool --chip auto chip_id
 install:
