@@ -11,9 +11,9 @@ sent me some links, so I'll try to document my progress here.
 This will launch a browser to download the latest firmware, then automatically
 install it. If it fails, see the references below.
 
-```bash
-make
-```
+* `make`
+* set region: <https://meshtastic.org/docs/getting-started/initial-config/>
+* other configuration: <https://meshtastic.org/docs/configuration/>
 
 ## References
 * <https://docs.heltec.org/en/node/esp32/wifi_lora_32/index.html>
