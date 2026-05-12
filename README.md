@@ -43,3 +43,8 @@ install it. If it fails, see the references below.
 * at that point you should be able to
   `meshstastic --sendtext "hello, world!"` and receive it both on the Android
   app and on the LCD screen of the first Heltec. you are connected!
+* claude explained to me today (2026-05-11) why all my previous attempts at
+  communicating with my Heltec V3 failed: the Android (or iPhone, presumably)
+  app *is*, effectively, the Heltec device; sending something with it will
+  not show up on the connected device itself. you need a second device to
+  accomplish that.
