@@ -23,3 +23,23 @@ install it. If it fails, see the references below.
 * to save the original Heltec firmware before flashing Meshtastic,
   `pip3 install --break-system-packages esptool`, then
   `esptool --port /dev/ttyUSB0 read_flash 0 ALL heltec_v3_original.bin`
+* after flashing a second Heltec device, set the region and channel the same as   the first:
+  ```
+  sudo apt update
+  sudo apt install python3-meshtastic
+  meshtastic --port /dev/ttyUSB0 --set lora.region US
+  ```
+  now you need to go to the Android app to which your first device is connected.
+  the 4th icon from the left should look something like ')))' inside a circle.
+  click that, and you should see a QR code and, underneath, an URL pointing
+  to meshtastic.org with a very long identifier string following it. copy that
+  URL by clicking the icon to the right of the URL, which looks something like
+  a clipboard. then open Termux, ssh to the computer from which you just flashed
+  the Heltec, and `meshtastic --port /dev/ttyUSB0 --ch-set-url '<PASTE>'`,
+  where `<PASTE>` means you paste the clipboard contents (the URL) into the
+  Termux window at that point in the command line. make sure to encase the URL
+  in single quotes, as shown, because it contains a `#` which would otherwise
+  signal a comment to Bash, hiding the identifier and breaking the URL.
+* at that point you should be able to
+  `meshstastic --sendtext "hello, world!"` and receive it both on the Android
+  app and on the LCD screen of the first Heltec. you are connected!
