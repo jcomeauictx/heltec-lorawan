@@ -20,3 +20,6 @@ install it. If it fails, see the references below.
 * <https://docs.heltec.org/en/node/esp32/quick_start.html>
 * [command-line meshtastic install](https://blog.habets.se/2024/01/Meshtastic-quick-setup.html)
 * [`esptool chip_id` error](https://github.com/espressif/esptool/issues/784) and [here](https://bugzilla.redhat.com/show_bug.cgi?id=1955097)
+* to save the original Heltec firmware before flashing Meshtastic,
+  `pip3 install --break-system-packages esptool`, then
+  `esptool --port /dev/ttyUSB0 read_flash 0 ALL heltec_v3_original.bin`
