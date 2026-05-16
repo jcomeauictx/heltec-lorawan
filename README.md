@@ -48,3 +48,7 @@ install it. If it fails, see the references below.
   app *is*, effectively, the Heltec device; sending something with it will
   not show up on the connected device itself. you need a second device to
   accomplish that.
+* to turn off the 1Hz heartbeat LED:
+  `meshtastic --set device.led_heartbeat_disabled true`
+  but first you may need to update the firmware. 2026-05-15 I upgraded from
+  version 2.3 to 2.7.
