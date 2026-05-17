@@ -1,3 +1,5 @@
+# contains bashisms, make sure of shell
+SHELL := /bin/bash
 DOWNLOADS ?= $(HOME)/Downloads
 ZIPFILE = $(wildcard $(DOWNLOADS)/firmware-*.zip)
 FIRMWARE_DIR = $(ZIPFILE:.zip=)
@@ -38,3 +40,10 @@ clean:
 	rm -f firmware_installed
 distclean: clean
 	rm -f zipfile_downloaded
+config:  $(wildcard $(HOME)/etc/meshtastic.conf)
+	args=(); \
+	if [ -e "$<" ]; then \
+	 while IFS="=" read key value; do \
+	  args+=(--set $$key $$value); \
+	 done < "$<" && meshtastic $${args[@]} --reboot; \
+	fi
