@@ -7,6 +7,7 @@ UPDATE = $(wildcard $(FIRMWARE_DIR)/firmware-heltec-v3-*-update.bin)
 FIRMWARE = $(UPDATE:-update.bin=.bin)
 BROWSER ?= xdg-open
 MESHTASTIC := https://meshtastic.org/downloads
+TEST_ONLY ?= echo
 ifeq ($(SHOWENV),)
  export
 endif
@@ -44,6 +45,12 @@ config:  $(wildcard $(HOME)/etc/meshtastic.conf)
 	args=(); \
 	if [ -e "$<" ]; then \
 	 while IFS="=" read key value; do \
-	  args+=(--set $$key $$value); \
-	 done < "$<" && meshtastic $${args[@]} --reboot; \
+	  case $$key in \
+	   position.latitude) args+=(--setlat $$value);; \
+	   position.longitude) args+=(--setlon $$value);; \
+	   position.elevation) args+=(--setalt $$value);; \
+	   user.longName) args+=(--set-owner $$value);; \
+	   *) args+=(--set $$key $$value);; \
+	  esac; \
+	 done < "$<" && $(TEST_ONLY) meshtastic $${args[@]} --reboot; \
 	fi
