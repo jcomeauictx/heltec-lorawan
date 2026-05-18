@@ -7,11 +7,12 @@ UPDATE = $(wildcard $(FIRMWARE_DIR)/firmware-heltec-v3-*-update.bin)
 FIRMWARE = $(UPDATE:-update.bin=.bin)
 BROWSER ?= xdg-open
 MESHTASTIC := https://meshtastic.org/downloads
-TEST_ONLY ?= echo
+TEST_ONLY ?= # set to `echo` for testing problems with `make config`
+PORT ?= /dev/ttyUSB0
 ifeq ($(SHOWENV),)
  export
 endif
-all: zipfile_downloaded firmware_installed
+all: zipfile_downloaded firmware_installed config
 zipfile_downloaded: $(ZIPFILE)
 	if [ -z "$<" ]; then \
 	 @echo 'Launching browser to download latest "stable" firmware' >&2; \
@@ -24,7 +25,7 @@ firmware_installed: $(FIRMWARE_DIR)/device-install.sh $(FIRMWARE)
 	if [ -z "$<" ]; then \
 	 $(MAKE) zipfile_downloaded; \
 	fi
-	cd $(<D) && $+
+	cd $(<D) && $< -p $(PORT) -f $(notdir $(word 2, $+))
 	cd $(<D) && ./device-update.sh $(UPDATE)
 	touch $@
 install:
@@ -42,7 +43,7 @@ clean:
 distclean: clean
 	rm -f zipfile_downloaded
 config:  $(wildcard $(HOME)/etc/meshtastic.conf)
-	args=(); \
+	args=(--port); args+=($(PORT)); \
 	if [ -e "$<" ]; then \
 	 while IFS="=" read key value; do \
 	  case $$key in \
