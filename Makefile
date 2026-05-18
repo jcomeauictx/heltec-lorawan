@@ -46,11 +46,11 @@ config:  $(wildcard $(HOME)/etc/meshtastic.conf)
 	if [ -e "$<" ]; then \
 	 while IFS="=" read key value; do \
 	  case $$key in \
-	   position.latitude) args+=(--setlat $$value);; \
-	   position.longitude) args+=(--setlon $$value);; \
-	   position.elevation) args+=(--setalt $$value);; \
-	   user.longName) args+=(--set-owner $$value);; \
-	   *) args+=(--set $$key $$value);; \
+	   position.latitude) args+=(--setlat); args+=("$$value");; \
+	   position.longitude) args+=(--setlon); args+=("$$value");; \
+	   position.elevation) args+=(--setalt); args+=("$$value");; \
+	   user.longName) args+=(--set-owner); args+=("$$value");; \
+	   *) args+=(--set); args+=($$key); args+=("$$value");; \
 	  esac; \
-	 done < "$<" && $(TEST_ONLY) meshtastic $${args[@]} --reboot; \
+	 done < "$<" && $(TEST_ONLY) meshtastic "$${args[@]}" --reboot; \
 	fi
