@@ -64,3 +64,6 @@ config:  $(wildcard $(HOME)/etc/meshtastic.conf)
 	  esac; \
 	 done < "$<" && $(TEST_ONLY) meshtastic "$${args[@]}" --reboot; \
 	fi
+	sleep 13  # give it time to reboot
+	# turning off heartbeat didn't work in the above. doing it again now
+	meshtastic --set device.led_heartbeat_disabled true
