@@ -9,6 +9,9 @@ BROWSER ?= xdg-open
 MESHTASTIC := https://meshtastic.org/downloads
 TEST_ONLY ?= # set to `echo` for testing problems with `make config`
 PORT ?= /dev/ttyUSB0
+# WEB and WEB_OFFSET are for using the web UI from a connected computer browser
+WEB ?= $(wildcard $(FIRMWARE_DIR)/littlefs-heltec-v3-*.bin)
+WEB_OFFSET ?= 0x00670000
 ifeq ($(SHOWENV),)
  export
 endif
@@ -28,6 +31,12 @@ firmware_installed: $(FIRMWARE_DIR)/device-install.sh $(FIRMWARE)
 	cd $(<D) && $< -p $(PORT) -f $(notdir $(word 2, $+))
 	cd $(<D) && ./device-update.sh $(UPDATE)
 	touch $@
+# this is (or should be) done automatically by firmware_installed
+web_installed: $(WEB)
+	if [ -e "$(WEB)" ]; then \
+	 cd $(<D) && esptool --port $(PORT) write-flash $(WEB_OFFSET) $(<F); \
+	 touch $@; \
+	fi
 install:
 	sudo apt install python3
 	# don't use Bullseye esptool, it's too old
