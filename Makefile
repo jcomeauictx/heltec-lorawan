@@ -52,18 +52,15 @@ clean:
 distclean: clean
 	rm -f zipfile_downloaded
 config:  $(wildcard $(HOME)/etc/meshtastic.conf)
-	args=(--port); args+=($(PORT)); \
+	args=(--port $(PORT)); \
 	if [ -e "$<" ]; then \
 	 while IFS="=" read key value; do \
 	  case $$key in \
-	   position.latitude) args+=(--setlat); args+=("$$value");; \
-	   position.longitude) args+=(--setlon); args+=("$$value");; \
-	   position.elevation) args+=(--setalt); args+=("$$value");; \
-	   user.longName) args+=(--set-owner); args+=("$$value");; \
-	   *) args+=(--set); args+=($$key); args+=("$$value");; \
+	   position.latitude) args+=(--setlat "$$value");; \
+	   position.longitude) args+=(--setlon "$$value");; \
+	   position.elevation) args+=(--setalt "$$value");; \
+	   user.longName) args+=(--set-owner "$$value");; \
+	   *) args+=(--set $$key "$$value");; \
 	  esac; \
-	 done < "$<" && $(TEST_ONLY) meshtastic "$${args[@]}" --reboot; \
+	 done < "$<" && $(TEST_ONLY) meshtastic "$${args[@]}"; \
 	fi
-	sleep 13  # give it time to reboot
-	# turning off heartbeat didn't work in the above. doing it again now
-	meshtastic --set device.led_heartbeat_disabled true
