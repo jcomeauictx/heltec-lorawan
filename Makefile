@@ -33,6 +33,9 @@ firmware_installed: $(FIRMWARE_DIR)/device-install.sh $(FIRMWARE)
 	cd $(<D) && $< -p $(PORT) -f $(notdir $(word 2, $+))
 	cd $(<D) && ./device-update.sh $(UPDATE)
 	touch $@
+$(FIRMWARE_DIR)/device-install.sh $(FIRMWARE): $(ZIPFILE)
+	[ -d $(@D) ] || mkdir $(@D)
+	[ -e $@ ] || (cd $(@D) && unzip $<)
 # this is (or should be) done automatically by firmware_installed
 web_installed: $(WEB)
 	if [ -e "$(WEB)" ]; then \
