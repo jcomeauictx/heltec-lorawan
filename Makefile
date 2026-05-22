@@ -11,7 +11,7 @@ TEST_ONLY ?= # set to `echo` for testing problems with `make config`
 PORT ?= /dev/ttyUSB0
 # WEB and WEB_OFFSET are for using the web UI from a connected computer browser
 # NOTE: version 2.7+ no longer supports web interface
-WEB ?= $(wildcard $(FIRMWARE_DIR)/littlefs-heltec-v3-*.bin)
+WEB ?= $(wildcard $(FIRMWARE_DIR)/littlefswebui-heltec-v3-*.bin)
 WEB_OFFSET ?= 0x00670000
 WEBUI := https://client.meshtastic.org/
 ifeq ($(SHOWENV),)
@@ -30,7 +30,9 @@ firmware_installed: $(FIRMWARE_DIR)/device-install.sh $(FIRMWARE)
 	if [ -z "$<" ]; then \
 	 $(MAKE) zipfile_downloaded; \
 	fi
-	cd $(<D) && $< -p $(PORT) -f $(notdir $(word 2, $+))
+	# try first with --web, then without if it fails
+	cd $(<D) && ($< -p $(PORT) -f $(notdir $(word 2, $+)) --web || \
+	 $< -p $(PORT) -f $(notdir $(word 2, $+)))
 	cd $(<D) && ./device-update.sh $(UPDATE)
 	touch $@
 $(FIRMWARE_DIR)/device-install.sh $(FIRMWARE): $(ZIPFILE)
