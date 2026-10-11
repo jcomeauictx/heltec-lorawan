@@ -51,4 +51,9 @@ install it. If it fails, see the references below.
 * to turn off the 1Hz heartbeat LED:
   `meshtastic --set device.led_heartbeat_disabled true`
   but first you may need to update the firmware. 2026-05-15 I upgraded from
-  version 2.3 to 2.7.
+  version 2.3 to 2.7. [UPDATE] had to downgrade to 2.6 to get the web interface
+  back.
+* 2026-10-11 fixed direct messages by adding default channel.
+* Some settings may be lost due to the way the Python client rearranges the
+  configuration command. I had to, for example, reset the long name using:
+  `meshtastic --set-owner "KE5TFZ Heltec0"` after configuring.
