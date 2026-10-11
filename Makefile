@@ -82,3 +82,5 @@ config:  $(wildcard $(HOME)/etc/meshtastic.conf)
 	 $(TEST_ONLY) meshtastic "$${posargs[@]}"; sleep 15; \
 	 echo configuration complete. >&2; \
 	fi
+	$(TEST_ONLY) meshtastic --set security.admin_channel_enabled true
+	$(TEST_ONLY) meshtastic --ch-set psk default --ch-index 0
